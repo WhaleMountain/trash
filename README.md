@@ -2,54 +2,64 @@
 
 ゴミ箱
 
-## build
+## install
 
-* `GOOS=linux GOARCH=amd64 go build main.go `
+setting GOPATH
+
+```bashrc
+export GOPATH=$HOME/go
+export PATH=PATH:$GOPATH/bin
+```
+
+```shell
+$ cd trash
+$ go install
+```
 
 ## 使い方
 
 ### ゴミ箱に入れる
 
-* `./main put test.txt`
+* `trash put test.txt`
 
 or
 
-* `./main test.txt`
+* `trash test.txt`
 
 ### ゴミ箱から削除する
 
-* `./main remove test.txt`
+* `trash remove test.txt`
 
 or
 
 全て削除
-* `./main removeall`
+* `trash removeall`
 
 ### ゴミ箱から復元する
 
 デフォルトの場所に復元する
-* `./main restore test.txt`
+* `trash restore test.txt`
 
 or
 
 ~/ABC に復元する 
-* `./main restore test.txt --restore-path ~/ABC`
+* `trash restore test.txt --restore-path ~/ABC`
 
 ### ゴミ箱の一覧を確認する
 
-* `./main list`
+* `trash list`
 
 ### ゴミ箱の設定
 
-* `./main config`
+* `trash config`
 
 設定する
-* `./main config set --delete-time 10` (デフォルト 30日)
-* `./main config set --restore-path ~/ABC` (デフォルト $HOME)
+* `trash config set --delete-time 10` (default 30 day)
+* `trash config set --restore-path ~/ABC` (default $HOME)
 
 ### help
-* `./main help`
+* `trash help`
 
 or
 
-* `./main -h`
+* `trash -h`

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"areus/internal/rename"
+	"trash/internal/rename"
 	"fmt"
 	"io/ioutil"
 	"os"

@@ -11,25 +11,25 @@ import (
 )
 
 // デフォルトの設定
-type areusConfig struct {
+type trashConfig struct {
 	TrashPath   string `toml:"-"`
 	RestorePath string
 	DeleteTime  int
 }
 
 // ユーザが指定する
-type areusFlags struct {
+type trashFlags struct {
 	DeleteTime  int
 	RestorePath string
 }
 
-var aConf = &areusConfig{}
-var aFlag = &areusFlags{}
+var aConf = &trashConfig{}
+var aFlag = &trashFlags{}
 
 func init() {
 	userHome, _ := os.UserHomeDir()
 	aConf.TrashPath = filepath.Join(userHome, ".Trash")
-	//aConf.TrashPath = ".areus"
+	//aConf.TrashPath = ".trash"
 	if err := decodeConfig(); err != nil {
 		aConf.RestorePath = userHome
 		aConf.DeleteTime = 30

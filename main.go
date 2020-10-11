@@ -1,7 +1,7 @@
 package main
 
 import (
-	"areus/cmd"
+	"trash/cmd"
 )
 
 func main() {
