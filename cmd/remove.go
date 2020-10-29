@@ -1,11 +1,11 @@
 package cmd
 
 import (
-	"trash/internal/rename"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"trash/internal/rename"
 
 	"github.com/spf13/cobra"
 )

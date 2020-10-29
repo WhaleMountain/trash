@@ -56,7 +56,7 @@ func showConfig(cmd *cobra.Command, args []string) {
 
 	checkDir()
 	checkDate()
-	
+
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 0, '\t', 0)
 	fmt.Fprintln(w, "TrashPath"+"\t", aConf.TrashPath)
 	fmt.Fprintln(w, "RestorePath"+"\t", aConf.RestorePath)

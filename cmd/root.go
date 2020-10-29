@@ -1,25 +1,24 @@
 package cmd
 
 import (
-	"trash/internal/rename"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
+	"trash/internal/rename"
 
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
 	Use:  "trash",
-	Args: cobra.ExactArgs(1),
+	Args: cobra.MinimumNArgs(1),
 	Run:  putData,
 }
 
 func checkDir() {
 	if _, err := os.Stat(aConf.TrashPath); err != nil {
-		fmt.Println("No such file or directory")
 		os.Mkdir(aConf.TrashPath, 0755)
 	}
 }
@@ -47,9 +46,7 @@ func checkDate() {
 				fmt.Println(err)
 			}
 		}
-
 	}
-
 }
 
 // Execute aabbcc
