@@ -22,9 +22,14 @@ func init() {
 }
 
 func restoreData(cmd *cobra.Command, args []string) {
+	checkDone := make(chan struct{})
+
+	go func() {
+		defer func() { checkDone <- struct{}{} }()
+		checkDate()
+	}()
 
 	checkDir()
-	checkDate()
 
 	files, err := ioutil.ReadDir(aConf.TrashPath)
 	if err != nil {
@@ -59,4 +64,6 @@ func restoreData(cmd *cobra.Command, args []string) {
 			}
 		}
 	}
+
+	<-checkDone
 }

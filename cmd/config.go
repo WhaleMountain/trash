@@ -28,8 +28,8 @@ var aFlag = &trashFlags{}
 
 func init() {
 	userHome, _ := os.UserHomeDir()
+	userHome = "/Users/e175733/VSCode/Go/areus"
 	aConf.TrashPath = filepath.Join(userHome, ".Trash")
-	//aConf.TrashPath = ".trash"
 	if err := decodeConfig(); err != nil {
 		aConf.RestorePath = userHome
 		aConf.DeleteTime = 30
@@ -53,26 +53,38 @@ func init() {
 }
 
 func showConfig(cmd *cobra.Command, args []string) {
+	checkDone := make(chan struct{})
 
-	checkDir()
-	checkDate()
+	go func() {
+		defer func() { checkDone <- struct{}{} }()
+		checkDir()
+		checkDate()
+	}()
 
 	w := tabwriter.NewWriter(os.Stdout, 0, 8, 0, '\t', 0)
 	fmt.Fprintln(w, "TrashPath"+"\t", aConf.TrashPath)
 	fmt.Fprintln(w, "RestorePath"+"\t", aConf.RestorePath)
 	fmt.Fprintln(w, "DeleteTime"+"\t", aConf.DeleteTime)
 	w.Flush()
+
+	<-checkDone
 }
 
 func setConfig(cmd *cobra.Command, args []string) {
+	checkDone := make(chan struct{})
 
-	checkDir()
-	checkDate()
+	go func() {
+		defer func() { checkDone <- struct{}{} }()
+		checkDir()
+		checkDate()
+	}()
 
 	aConf.RestorePath = aFlag.RestorePath
 	aConf.DeleteTime = aFlag.DeleteTime
 
 	encodeConfig()
+
+	<-checkDone
 }
 
 func encodeConfig() {

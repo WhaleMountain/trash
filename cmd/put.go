@@ -21,10 +21,14 @@ func init() {
 }
 
 func putData(cmd *cobra.Command, args []string) {
+	checkDone := make(chan struct{})
 
-	// ゴミ箱が存在するか
+	go func() {
+		defer func() { checkDone <- struct{}{} }()
+		checkDate()
+	}()
+
 	checkDir()
-	checkDate()
 
 	for _, arg := range args {
 		target, _ := filepath.Abs(arg)
@@ -54,6 +58,8 @@ func putData(cmd *cobra.Command, args []string) {
 			return
 		}
 	}
+
+	<-checkDone
 }
 
 func checkExists(fileName string) error {

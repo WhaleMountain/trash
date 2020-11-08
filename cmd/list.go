@@ -19,9 +19,13 @@ func init() {
 }
 
 func showList(cmd *cobra.Command, args []string) {
+	checkDone := make(chan struct{})
 
-	checkDir()
-	checkDate()
+	go func() {
+		defer func() { checkDone <- struct{}{} }()
+		checkDir()
+		checkDate()
+	}()
 
 	files, err := ioutil.ReadDir(aConf.TrashPath)
 	if err != nil {
@@ -44,4 +48,6 @@ func showList(cmd *cobra.Command, args []string) {
 		fmt.Fprintln(w, fInfo["Name"], "\t", bytefmt.ByteSize(uint64(file.Size())), "\t", file.ModTime().Format("2006/01/02 15:04:05"), "\t", fInfo["PutDate"])
 	}
 	w.Flush()
+
+	<-checkDone
 }
