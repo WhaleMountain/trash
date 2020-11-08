@@ -23,8 +23,8 @@ type trashFlags struct {
 	RestorePath string
 }
 
-var aConf = &trashConfig{}
-var aFlag = &trashFlags{}
+var aConf = trashConfig{}
+var aFlag = trashFlags{}
 
 func init() {
 	userHome, _ := os.UserHomeDir()

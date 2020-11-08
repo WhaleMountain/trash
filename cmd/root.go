@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"sort"
 	"time"
 	"trash/internal/rename"
+	"trash/internal/sort"
 
 	"github.com/spf13/cobra"
 )
@@ -31,18 +31,7 @@ func checkDate() {
 
 	files, _ := ioutil.ReadDir(aConf.TrashPath)
 
-	// PutDate Asc (昇順)
-	sort.Slice(files, func(i, j int) bool {
-		var fInfoI = make(map[string]string, 2)
-		var fInfoJ = make(map[string]string, 2)
-		rename.Decode(files[i].Name(), &fInfoI)
-		rename.Decode(files[j].Name(), &fInfoJ)
-
-		putDateI, _ := time.Parse("2006/01/02 15:04:05", fInfoI["PutDate"])
-		putDateJ, _ := time.Parse("2006/01/02 15:04:05", fInfoJ["PutDate"])
-
-		return putDateI.Unix() < putDateJ.Unix()
-	})
+	sort.PutDateAsc(files)
 
 	var fInfo = make(map[string]string, 2)
 	for _, file := range files {
