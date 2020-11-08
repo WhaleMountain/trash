@@ -28,7 +28,6 @@ var aFlag = trashFlags{}
 
 func init() {
 	userHome, _ := os.UserHomeDir()
-	userHome = "/Users/e175733/VSCode/Go/areus"
 	aConf.TrashPath = filepath.Join(userHome, ".Trash")
 	if err := decodeConfig(); err != nil {
 		aConf.RestorePath = userHome
